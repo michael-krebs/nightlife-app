@@ -2,6 +2,7 @@
 
 var path = process.cwd();
 var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
+var YelpController = require(path + '/app/controllers/yelpController.server.js')
 
 module.exports = function (app, passport) {
 
@@ -14,6 +15,7 @@ module.exports = function (app, passport) {
 	}
 
 	var clickHandler = new ClickHandler();
+	var yelpController = new YelpController();
 
 	app.route('/')
 		.get(isLoggedIn, function (req, res) {
@@ -48,6 +50,14 @@ module.exports = function (app, passport) {
 		.get(passport.authenticate('twitter', {
 			successRedirect: '/',
 			failureRedirect: '/login'
+		}));
+	
+	app.route('/api/yelp')
+		.get(yelpController.request_yelp({ location: "San Francisco" }, function(err, response) {
+			if (err) {
+				console.log(err);
+			}
+			console.log(response);
 		}));
 
 	app.route('/api/:id/clicks')
