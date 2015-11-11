@@ -57,7 +57,6 @@ function YelpController() {
   
     /* Then we use request to send make the API Request */
     request(apiURL, function(error, response, body){
-      console.log(response);
       return callback(error, response, body);
     });
   

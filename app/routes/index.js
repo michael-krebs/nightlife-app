@@ -37,6 +37,13 @@ module.exports = function (app, passport) {
 		.get(isLoggedIn, function (req, res) {
 			res.sendFile(path + '/public/profile.html');
 		});
+		
+	app.route('/api/yelp')
+		.get(function(req, res) {
+			yelpController.request_yelp({location: "San Francisco"}, function(error, response, body) {
+				console.log(body)
+			});
+		});
 
 	app.route('/api/:id')
 		.get(isLoggedIn, function (req, res) {
@@ -52,13 +59,6 @@ module.exports = function (app, passport) {
 			failureRedirect: '/login'
 		}));
 	
-	app.route('/api/yelp')
-		.get(yelpController.request_yelp({ location: "San Francisco" }, function(err, response) {
-			if (err) {
-				console.log(err);
-			}
-			console.log(response);
-		}));
 
 	app.route('/api/:id/clicks')
 		.get(isLoggedIn, clickHandler.getClicks)
