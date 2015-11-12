@@ -1,6 +1,7 @@
 'use strict';
 
-(function(){
+$(document).ready(function(){
+
 	
 	// take search input when submitted
 	$('#searchBtn').click(function() {
@@ -9,10 +10,13 @@
 		// make get request to yelp controller
 		$.get("/api/yelp/" + searchText, function(data) {
 			var bars = JSON.parse(data).businesses;
-			console.log(bars);
 			populate(bars);
 		});
 	});
+	
+  	$('#barList').on('click', '.goingButton', function(){
+  		console.log(this.id);
+  	})
 	
 	// take and interpret json data from yelp controller
 	function populate(bars) {
@@ -35,33 +39,12 @@
 						"<div class='card-content'>" +
 							"<p class='description truncate'>" + bar.snippet_text + "</p>" +
 							"<a href='" + bar.url + "' class='btn'>Yelp</a>" +
-							"<a href='#' class='btn right-align'>I'm Going</a>" +  
+							"<a href='#' id='" + bar.id + "' class='btn right-align goingButton'>I'm Going</a>" +  
 					  	"</div>" +
 					"</div>" +
 					"</div>"
 				)
 		})
 	}
-	// populate view w/ bars
-	
-	/*
-	<div class="row">
-		<div class="col s12 m7">
-		  <div class="card">
-			<div class="card-image">
-			  <img src="images/sample-1.jpg">
-			  <span class="card-title">Card Title</span>
-			</div>
-			<div class="card-content">
-			  <p>I am a very simple card. I am good at containing small bits of information.
-			  I am convenient because I require little markup to use effectively.</p>
-			</div>
-			<div class="card-action">
-			  <a href="#">This is a link</a>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	*/
-	
-})();
+
+});

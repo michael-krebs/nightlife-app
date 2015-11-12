@@ -4,14 +4,8 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Bar = new Schema({
-    yelp: {
-        name: String,
-        description: String,
-        rating: Number,
-        imgUrl: String,
-        yelpUrl: String
-    },
-    usersGoing: [ Number ]
+    barId: String, // bar ID given by yelp
+    usersGoing: [ Number ] // list of IDs of users going
 });
 
 module.exports = mongoose.model('Bar', Bar);

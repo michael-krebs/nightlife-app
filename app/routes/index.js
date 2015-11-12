@@ -2,7 +2,8 @@
 
 var path = process.cwd();
 var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
-var YelpController = require(path + '/app/controllers/yelpController.server.js')
+var YelpController = require(path + '/app/controllers/yelpController.server.js');
+var BarHandler = require(path + '/app/controllers/barsHandler.server.js');
 
 module.exports = function (app, passport) {
 
@@ -16,6 +17,7 @@ module.exports = function (app, passport) {
 
 	var clickHandler = new ClickHandler();
 	var yelpController = new YelpController();
+	var barHandler = new BarHandler();
 
 	app.route('/')
 		.get(function (req, res) {
@@ -44,6 +46,9 @@ module.exports = function (app, passport) {
 				res.json(body)
 			});
 		});
+	
+	app.route('/api/bar/:barid')
+		.get(isLoggedIn, barHandler.goingBtnClicked)
 
 	app.route('/api/:id')
 		.get(isLoggedIn, function (req, res) {
