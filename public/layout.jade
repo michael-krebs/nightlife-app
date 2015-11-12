@@ -1,0 +1,24 @@
+doctype html
+meta(name='viewport', content='width=device-width, initial-scale=1')
+html
+	link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css")
+	link(rel="stylesheet" href="/public/css/app.css")
+	
+	title Nightlife
+	
+	.container
+		header
+			nav
+				.nav-wrapper
+					a(href="/").brand-logo App name
+					ul#nav-mobile.right.hide-on-med-and-down
+						li
+							a(href="#") Hello whatever your name is
+						li
+							a(href="#") Logout
+		block content
+	
+	script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+	script(src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js")
+	
+	block javascript

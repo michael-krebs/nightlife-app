@@ -18,8 +18,8 @@ module.exports = function (app, passport) {
 	var yelpController = new YelpController();
 
 	app.route('/')
-		.get(isLoggedIn, function (req, res) {
-			res.sendFile(path + '/public/index.html');
+		.get(function (req, res) {
+			res.render(path + '/public/index.jade');
 		});
 
 	app.route('/login')
