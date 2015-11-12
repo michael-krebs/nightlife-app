@@ -22,7 +22,8 @@ function YelpController() {
   
     /* We can setup default parameters here */
     var default_parameters = {
-      category_filter: 'bars'
+      category_filter: 'bars',
+      limit: '10'
     };
   
     /* We set the require parameters here */
