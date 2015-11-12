@@ -38,10 +38,10 @@ module.exports = function (app, passport) {
 			res.sendFile(path + '/public/profile.html');
 		});
 		
-	app.route('/api/yelp')
+	app.route('/api/yelp/:location')
 		.get(function(req, res) {
-			yelpController.request_yelp({location: "San Francisco"}, function(error, response, body) {
-				console.log(body)
+			yelpController.request_yelp({location: req.params.location}, function(error, response, body) {
+				res.json(body)
 			});
 		});
 
