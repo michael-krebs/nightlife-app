@@ -13,9 +13,9 @@ html
 					a(href="/").brand-logo App name
 					ul#nav-mobile.right.hide-on-med-and-down
 						li
-							a(href="#") Hello <!-- Replace this with user.id.name (or w\e) --> whatever your name is
+							a#username(href="#")
 						li
-							a(href="#") Logout
+							a(href="/logout") Logout
 		block content
 	
 	script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js")
