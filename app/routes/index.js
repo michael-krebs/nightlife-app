@@ -20,13 +20,13 @@ module.exports = function (app, passport) {
 	var barHandler = new BarHandler();
 
 	app.route('/')
-		.get(function (req, res) {
+		.get(isLoggedIn, function (req, res) {
 			res.render(path + '/public/index.jade');
 		});
 
 	app.route('/login')
 		.get(function (req, res) {
-			res.sendFile(path + '/public/login.html');
+			res.render(path + '/public/login.jade');
 		});
 
 	app.route('/logout')
@@ -48,7 +48,8 @@ module.exports = function (app, passport) {
 		});
 	
 	app.route('/api/bar/:barid')
-		.get(isLoggedIn, barHandler.goingBtnClicked)
+		.get(isLoggedIn, barHandler.getInitialUsers)
+		.post(isLoggedIn, barHandler.goingBtnClicked)
 
 	app.route('/api/:id')
 		.get(isLoggedIn, function (req, res) {

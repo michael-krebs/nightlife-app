@@ -15,7 +15,10 @@ $(document).ready(function(){
 	});
 	
   	$('#barList').on('click', '.goingButton', function(){
-  		console.log(this.id);
+  		var barId = this.id;
+  		$.post('/api/bar/' + barId, function(data){
+  			console.log(data);
+  		})
   	})
 	
 	// take and interpret json data from yelp controller
@@ -29,21 +32,26 @@ $(document).ready(function(){
 			// get large rather than tiny img from yelp
 			bar.largeImg = bar.image_url.slice(0, -6) + "l.jpg";
 			
-			$('#barList').append(
-					"<div class='col s12 m6'>" +
-					  "<div class='card medium'>" +
-						"<div class='card-image'>" +
-						  "<img src='" + bar.largeImg + "'>" +
-						  "<span class='card-title'>" + bar.name +"</span>" +
-						"</div>" +
-						"<div class='card-content'>" +
-							"<p class='description truncate'>" + bar.snippet_text + "</p>" +
-							"<a href='" + bar.url + "' class='btn'>Yelp</a>" +
-							"<a href='#' id='" + bar.id + "' class='btn right-align goingButton'>I'm Going</a>" +  
-					  	"</div>" +
+			$.get('/api/bar/' + bar.id, function(numberGoing) {
+				$('#barList').append(
+				"<div class='col s12 m6'>" +
+				  "<div class='card medium'>" +
+					"<div class='card-image'>" +
+					  "<img src='" + bar.largeImg + "'>" +
+					  "<span class='card-title'>" + bar.name +"</span>" +
 					"</div>" +
-					"</div>"
-				)
+					"<div class='card-content'>" +
+						"<p class='description truncate'>" + bar.snippet_text + "</p>" +
+						"<a href='" + bar.url + "' class='btn'>Yelp</a>" +
+						"<a href='#' id='" + bar.id + "' class='btn right-align goingButton'>" + numberGoing +" I'm Going</a>" +  
+				  	"</div>" +
+				"</div>" +
+				"</div>"
+			)
+				
+			})
+			
+		
 		})
 	}
 

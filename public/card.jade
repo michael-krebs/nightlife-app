@@ -1,0 +1,11 @@
+mixin card(image, name, url, snippet, barId)
+    .col.s12.m6
+        .card.medium
+            .card-image
+                img(src=image)
+                span.card-title= name
+            .card-content
+                p.description.truncate= snippet
+                a(href=url) Yelp
+                a(id=barId).btn.right-align.goingButton I'm Going
+                

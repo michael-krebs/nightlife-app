@@ -5,25 +5,67 @@ var Users = require('../models/users.js');
 
 function BarHandler () {
     
+    this.getInitialUsers = function (req, res) {
+        
+        Bars
+            .findOne({ 'barId': req.params.barid})
+            .exec(function (err, result){
+                if (err) { throw err; }
+                
+                if (result) {
+                    res.json(result.usersGoing.length);
+                } else {
+                    res.send(0);
+                }
+            })
+    }
+    
     this.goingBtnClicked = function (req, res) {
+        
+        var voted = false;
+        
         // check whether bar exists in db
-        Bars //TODO Send bar ID via api req 
+        Bars
             .findOne({ 'barId': req.params.barid })
             .exec(function (err, result) {
                 if (err) { throw err; }
                 
-                // if no, add it to the db w/ user click
-                if (result === null) {
-                    Bars.insert({ 'barId': req.params.barid,
+                if (result) {
+                    
+                    result.usersGoing.forEach(function(userId, index) {
+                        if (userId === req.user.twitter.id) {
+                            // remove from usersGoing list
+                            result.usersGoing.splice(index, 1);
+                            voted = true;
+                            Bars
+                                .update({ 'barId': req.params.barid }, result)
+                                .exec(function(err){
+                                    if (err) { throw err; }
+                                    res.send();
+                                })
+                        }
+                    })
+                    
+                    if (!voted) {
+                        // add to usersgoing list
+                        result.usersGoing.push(req.user.twitter.id);
+                        Bars
+                            .update({ 'barId': req.params.barid }, result)
+                            .exec(function(err){
+                                if (err) { throw err; }
+                                res.send();
+                            })
+                    }
+                    
+                } else {
+                    var newBar = new Bars({ 'barId': req.params.barid,
                         "usersGoing": [ req.user.twitter.id ]});
+                    newBar.save(function(err, document) {
+                        if (err) { throw err; }
+                        res.json(document.usersGoing.length)
+                    });
                 }
-                res.json(result.usersGoing.length);
-            })
-        
-        
-            // if no, add user to usersGoing and increment number.
-            // if yes, remove user from usersGoing and decrement number.
-    
+            });
     }
 }
 
