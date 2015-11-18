@@ -34,6 +34,11 @@ module.exports = function (app, passport) {
 			req.logout();
 			res.redirect('/login');
 		});
+	
+	app.route('/test')
+		.get(function (req, res) {
+			res.render(path + '/public/test.jade');
+		});
 
 	app.route('/profile')
 		.get(isLoggedIn, function (req, res) {

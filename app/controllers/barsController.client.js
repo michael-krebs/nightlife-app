@@ -16,26 +16,7 @@ $(document).ready(function(){
 			var bars = JSON.parse(data).businesses;
 			populate(bars);
 		});
-		
-		//ajax search? <- lag city
-		/*$("input").keyup(function() {
-			$.ajax({
-	      type: "GET",
-	      url: '/api/yelp/' + searchText,
-	      contentType: "application/json; charset=utf-8",
-	      async: false,
-	      dataType: "json",
-	      success: function (data) {
-	        $.each(data, function(i, item) {
-	          $('div.searchBox').html(item.extract);
-	          var bars = JSON.parse(data).businesses;
-			      populate(bars);
-	      },
-	      error: function (errorMessage) {
-	      }
-	    });
-    }).keyup();
-    */
+
 	});
 	
 	// update who's going list when clicked
@@ -45,7 +26,6 @@ $(document).ready(function(){
   			console.log(data);
   		})
   	})
-	
 	// take and interpret json data from yelp controller
 	function populate(bars) {
 		
@@ -77,5 +57,4 @@ $(document).ready(function(){
 			});
 		});
 	}
-
 });
